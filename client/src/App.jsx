@@ -940,7 +940,7 @@ export default function App() {
                       <option value="ALL">{t.allDepartments}</option>
                       {meta.departments.map((d) => (
                         <option key={d} value={d}>
-                          {d}
+                          {lang === 'en' ? DEPT_EN_MAP[d] || d : d}
                         </option>
                       ))}
                     </select>
@@ -1257,7 +1257,7 @@ export default function App() {
                                 <span className="text-[11px] text-slate-400">{c.code}</span>
                                 {c.exemption_note_zh && (
                                   <span className="ml-1.5 inline-block text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">
-                                    可抵免
+                                    {lang === 'en' ? 'Exemptible' : '可抵免'}
                                   </span>
                                 )}
                               </td>
@@ -1287,7 +1287,7 @@ export default function App() {
                               </td>
                               <td className="p-2.5 align-top text-xs text-slate-600 whitespace-nowrap">
                                 <div>
-                                  {t.weekdays[c.weekday]} {c.periods}節
+                                  {t.weekdays[c.weekday]} {c.periods}{lang === 'en' ? '' : '節'}
                                 </div>
                                 <div className="text-slate-400">{c.room}</div>
                               </td>
@@ -1669,7 +1669,7 @@ export default function App() {
                     <table className="w-full border-collapse text-center text-[11px]">
                       <thead>
                         <tr className="bg-[#233952] text-white">
-                          <th className="p-1.5 border border-slate-300 w-12">節次</th>
+                          <th className="p-1.5 border border-slate-300 w-12">{lang === 'en' ? 'Period' : '節次'}</th>
                           {WEEKDAYS.map((w) => (
                             <th key={w} className="p-1.5 border border-slate-300">
                               {t.weekdays[w]}
