@@ -30,6 +30,28 @@ import { MESSAGES } from './i18n.js';
 const PERIODS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const WEEKDAYS = [1, 2, 3, 4, 5];
 
+const DEPT_EN_MAP = {
+  '通識教育中心 (10000)': 'General Education Center (10000)',
+  '護理系 (11140)': 'Nursing (11140)',
+  '高齡健康照護系 (13140)': 'Gerontological Health Care (13140)',
+  '健康事業管理系 (21140)': 'Health Care Management (21140)',
+  '資訊管理系 (22140)': 'Information Management (22140)',
+  '休閒產業與健康促進系 (23140)': 'Leisure Industry & Health Promotion (23140)',
+  '語言治療與聽力學系 (25140)': 'Speech-Language Pathology & Audiology (25140)',
+  '嬰幼兒保育系 (31140)': 'Infant & Child Care (31140)',
+  '運動保健系 (32140)': 'Exercise & Health Science (32140)',
+  '生死與健康心理諮商系 (33140)': 'Thanatology & Health Counseling (33140)',
+  '跨領域學位學程 (41140)': 'Interdisciplinary Program (41140)',
+  '智慧健康照護跨領域學士學位學程 (42140)': 'Smart Healthcare Interdisciplinary Program (42140)'
+};
+
+const CATEGORY_EN_MAP = {
+  '專業必修(系所)': 'Major Required',
+  '專業選修(系所)': 'Major Elective',
+  '通識必修(通識)': 'General Ed Required',
+  '通識選修(通識)': 'General Ed Elective'
+};
+
 const normalizeCourseName = (name) =>
   String(name || '')
     .replace(/（.*?）|\(.*?\)/g, '')
@@ -1836,7 +1858,7 @@ export default function App() {
                         onClick={() => setFilters((p) => ({ ...p, page: p.page - 1 }))}
                         className="px-2.5 py-1 text-xs rounded border border-slate-300 disabled:opacity-40"
                       >
-                        上一頁
+                        {lang === 'en' ? 'Prev' : '上一頁'}
                       </button>
                       <span className="text-xs text-slate-600">
                         {filters.page} / {courseResult.totalPages}
@@ -1846,7 +1868,7 @@ export default function App() {
                         onClick={() => setFilters((p) => ({ ...p, page: p.page + 1 }))}
                         className="px-2.5 py-1 text-xs rounded border border-slate-300 disabled:opacity-40"
                       >
-                        下一頁
+                        {lang === 'en' ? 'Next' : '下一頁'}
                       </button>
                     </div>
                   )}
@@ -1917,7 +1939,7 @@ export default function App() {
                     >
                       {[1, 2, 3, 4].map((g) => (
                         <option key={g} value={g}>
-                          {g} 年級
+                          {lang === 'en' ? `Year ${g}` : `${g} 年級`}
                         </option>
                       ))}
                     </select>
