@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body,
+html.dark .bg-slate-100 {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+html.dark .bg-white,
+html.dark .bg-white\/95 {
+  background-color: #1e293b;
+}
+
+html.dark .bg-slate-50 {
+  background-color: #172033;
+}
+
+html.dark .border-slate-200,
+html.dark .border-slate-300,
+html.dark .divide-slate-100 > :not(:last-child) {
+  border-color: #334155;
+}
+
+html.dark .text-slate-900,
+html.dark .text-slate-800 {
+  color: #f1f5f9;
+}
+
+html.dark .text-slate-700 {
+  color: #e2e8f0;
+}
+
+html.dark .text-slate-600,
+html.dark .text-slate-500 {
+  color: #94a3b8;
+}
+
+html.dark .text-slate-400 {
+  color: #64748b;
+}
+
+html.dark input:not([type="checkbox"]),
+html.dark select,
+html.dark textarea {
+  background-color: #0f172a;
+  color: #f1f5f9;
+  border-color: #475569;
+}
+
+html.dark .hover\:bg-slate-50:hover,
+html.dark .hover\:bg-slate-100:hover {
+  background-color: #273549;
+}
+
+html.dark .bg-sky-50 {
+  background-color: #0c2a44;
+  border-color: #1e4976;
+}
+
+html.dark .bg-rose-50\/70,
+html.dark .bg-rose-50\/60 {
+  background-color: rgba(127, 29, 29, 0.28);
+}
+
+html.dark .text-sky-700 {
+  color: #38bdf8;
+}
+
+html.dark .text-\[\#163a5f\] {
+  color: #7dd3fc;
+}
