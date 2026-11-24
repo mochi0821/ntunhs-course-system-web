@@ -73,3 +73,9 @@ html.dark .text-sky-700 {
 html.dark .text-\[\#163a5f\] {
   color: #7dd3fc;
 }
+
+html.dark button.bg-\[\#163a5f\] {
+  background-color: #0284c7;
+  border-color: #38bdf8;
+  color: #ffffff;
+}
