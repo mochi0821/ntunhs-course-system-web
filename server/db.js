@@ -145,6 +145,55 @@ export function initDatabase() {
 
   seedInitialData();
   seed1151Catalog(db);
+  seedHistoryAndStudent();
+}
+
+function seedHistoryAndStudent() {
+  const historyPath = path.resolve(process.cwd(), 'server', 'seed_history.json');
+  if (!fs.existsSync(historyPath)) return;
+
+  try {
+    const raw = JSON.parse(fs.readFileSync(historyPath, 'utf8'));
+    const courseCnt = db.prepare('SELECT COUNT(*) AS cnt FROM courses').get().cnt;
+    if (courseCnt < 100 && Array.isArray(raw.courses)) {
+      const insertCourse = db.prepare(`
+        INSERT OR IGNORE INTO courses (
+          code, semester, department, grade, name_zh, name_en, credits, category,
+          teacher_name, teacher_en, weekday, periods, period_mask, room,
+          enrolled, capacity, min_grade, restriction_note_zh, syllabus_summary_zh, tags
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `);
+      db.exec('BEGIN');
+      for (const c of raw.courses) {
+        insertCourse.run(
+          c.code, c.semester, c.department, c.grade, c.name_zh, c.name_en, c.credits, c.category,
+          c.teacher_name, c.teacher_en, c.weekday, c.periods, computePeriodMask(c.periods), c.room,
+          c.enrolled || 0, c.capacity || 50, c.min_grade || 1, c.restriction_note_zh || null,
+          c.syllabus_summary_zh || null, c.tags || ''
+        );
+      }
+      db.exec('COMMIT');
+    }
+
+    const existsStudent = db.prepare('SELECT id FROM users WHERE username = ?').get('132214235');
+    if (!existsStudent && Array.isArray(raw.completed_132214235)) {
+      const studentPwd = process.env.PERSONAL_STUDENT_PASSWORD || process.env.DEMO_STUDENT_PASSWORD || 'StudentDemo@2026';
+      db.prepare(`
+        INSERT INTO users (username, password_hash, role, name, department, grade, completed_courses)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `).run(
+        '132214235',
+        hashPassword(studentPwd),
+        'student',
+        '洪思玄',
+        '資訊管理系 (22140)',
+        3,
+        JSON.stringify(raw.completed_132214235)
+      );
+    }
+  } catch (err) {
+    console.warn('seedHistoryAndStudent skipped:', err.message);
+  }
 }
 
 function seedInitialData() {
